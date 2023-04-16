@@ -1,3 +1,9 @@
+import time
+import unittest
+from ngrams import Ngram
+from src.algotest.ngramTest import NGram as NgramTest
+
+
 import unittest
 from ngrams import Ngram
 from src.algotest.ngramTest import NGram as NgramTest
@@ -37,7 +43,27 @@ class TestNgram(unittest.TestCase):
         expected_output = self.expected_output(input_sentence, 3)
         self.assertEqual(expected_output, NgramTest(input_sentence, 3).ngram())
 
+    def test_ngrams_repeated_words(self):
+        # Test ngrams() method with repeated words
+        input_sentence = ["This sentence has repeated words, this sentence has repeated words."]
+        expected_output = self.expected_output(input_sentence, 4)
+        self.assertEqual(expected_output, NgramTest(input_sentence, 4).ngram())
+
+    def test_ngram_time_performance(self):
+        # Test time performance of Ngram class
+        start_time = time.perf_counter_ns()
+        Ngram(self.input_sentence, 3).context()
+        end_time = time.perf_counter_ns()
+        print(f"IRIS Ngram class took {(end_time - start_time) / 1_000_000} ms to execute.")
+
+    def test_ngram_test_time_performance(self):
+        # Test time performance of NgramTest class
+        start_time = time.perf_counter_ns()
+        NgramTest(self.input_sentence, 3).ngram()
+        end_time = time.perf_counter_ns()
+        print(f"NgramTest class took {(end_time - start_time) / 1_000_000} ms to execute.")
 
 
 if __name__ == '__main__':
     unittest.main()
+
